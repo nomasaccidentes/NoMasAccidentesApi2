@@ -1,0 +1,14 @@
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\bin\Debug\netcoreapp2.1\NoMasAccidentesApi.deps.json
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\bin\Debug\netcoreapp2.1\NoMasAccidentesApi.runtimeconfig.json
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\bin\Debug\netcoreapp2.1\NoMasAccidentesApi.runtimeconfig.dev.json
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\bin\Debug\netcoreapp2.1\NoMasAccidentesApi.dll
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.csprojAssemblyReference.cache
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.csproj.CoreCompileInputs.cache
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.RazorAssemblyInfo.cache
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.RazorAssemblyInfo.cs
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.AssemblyInfoInputs.cache
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.AssemblyInfo.cs
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.RazorTargetAssemblyInfo.cache
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\bin\Debug\netcoreapp2.1\NoMasAccidentesApi.pdb
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.dll
+C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.pdb
