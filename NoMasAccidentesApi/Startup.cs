@@ -26,6 +26,7 @@ namespace NoMasAccidentesApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IRolRepository, RolRepository>();
+            services.AddTransient<IRubroRepository, RubroRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddSingleton<IConfiguration>(Configuration);
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
