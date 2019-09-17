@@ -21,17 +21,79 @@ namespace NoMasAccidentesApi.Controllers
 
         [Route("api/usuario/GetUserLogin")]
         [HttpPost]
-        public ActionResult GetUserLogin([FromBody] Login login)
+        public IActionResult GetUserLogin([FromBody] Login login)
         {
 
+
+            dynamic result = usuarioRepository.GetUserLogin(login);
+            //Se crea una instancia de la clase rol
+
+            if(result != null)
+            {
+                Usuario u = new Usuario
+                {
+                    usuario_username = result.USUARIO_USERNAME,
+                    usuario_id = Convert.ToInt32(result.USUARIO_ID),
+                    usuario_activo = Convert.ToInt32(result.USUARIO_ACTIVO)
+                };
+
+                if(result.PROFESIONAL_TS_CREACION != null)
+                {
+
+
+                    Profesional p = new Profesional
+                    {
+                        profesional_id = Convert.ToInt32(result.PROFESIONAL_ID),
+                        profesional_nombre = result.PROFESIONAL_NOMBRE,
+                        profesional_apellido = result.PROFESIONAL_APELLIDO,
+                        profesional_rut = result.PROFESIONAL_RUT,
+                        profesional_ts_creacion = result.PROFESIONAL_TS_CREACION,
+                       
+                    };
+                    u.profesional = p;
+                }
+
+                if(result.CLIENTE_RUT != null)
+                {
+                    Rubro rubro = new Rubro
+                    {
+                        rubro_id = Convert.ToInt32(result.RUBRO_ID),
+                        rubro_nombre = result.RUBRO_NOMBRE,
+                        rubro_activo = Convert.ToInt32(result.RUBRO_ACTIVO)
+                    };
+
+                    Cliente c = new Cliente
+                    {
+                        cliente_id = Convert.ToInt32(result.CLIENTE_ID),
+                        cliente_nombre = result.CLIENTE_NOMBRE,
+                        cliente_rut = result.CLIENTE_RUT,
+                        cliente_direccion = result.CLIENTE_DIRECCION,
+                        rubro = rubro
+                    };
+                    u.cliente = c;
+                }
+                
+
+
+                Rol r = new Rol
+                {
+                    rol_id = Convert.ToInt32(result.ROL_ID),
+                    rol_nombre = result.ROL_NOMBRE,
+                    rol_activo = Convert.ToInt32(result.ROL_ACTIVO)
+                };
+
+                u.rol = r;
+
+                return Ok(new { StatusCode = 200 , data = u});
+            }
             
-            var result = usuarioRepository.GetUserLogin(login);
+
             if (result == null)
             {
-                return NotFound();
+                return NotFound(new { StatusCode = 204, data = "Usuario Incorrecto" });
             }
 
-            return Ok(result);
+            return null;
         }
     }
 }

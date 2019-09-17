@@ -22,8 +22,8 @@ namespace NoMasAccidentesApi.Repositories
 
         public object GetUserLogin(Login login)
         {
-            object result = null;
-
+            //object result = null;
+            dynamic result = null;
             try
             {
 
@@ -44,7 +44,7 @@ namespace NoMasAccidentesApi.Repositories
                 {
                     var query = "SP_LOGIN_USER";
 
-                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
             }
             catch (Exception ex)
