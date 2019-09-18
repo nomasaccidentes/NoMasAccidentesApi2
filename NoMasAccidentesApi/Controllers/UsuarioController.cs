@@ -34,7 +34,10 @@ namespace NoMasAccidentesApi.Controllers
                 {
                     usuario_username = result.USUARIO_USERNAME,
                     usuario_id = Convert.ToInt32(result.USUARIO_ID),
-                    usuario_activo = Convert.ToInt32(result.USUARIO_ACTIVO)
+                    usuario_activo = Convert.ToInt32(result.USUARIO_ACTIVO),
+                    cliente_id = Convert.ToInt32(result.CLIENTE_ID),
+                    profesional_id  = Convert.ToInt32(result.PROFESIONAL_ID),
+                    rol_id = Convert.ToInt32(result.ROL_ID)
                 };
 
                 if(result.PROFESIONAL_TS_CREACION != null)
@@ -94,6 +97,63 @@ namespace NoMasAccidentesApi.Controllers
             }
 
             return null;
+        }
+
+
+        [Route("api/usuario/GetUsuarios")]
+        [HttpGet]
+        public ActionResult GetUsuarios()
+        {
+            var result = usuarioRepository.GetUsuarios();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+
+        [Route("api/usuario/InsertUsuario")]
+        [HttpPost]
+        public ActionResult InserUsuario([FromBody] Usuario usuario)
+        {
+
+            var result = usuarioRepository.InsertUsuario(usuario);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [Route("api/usuario/DeleteUsuario/{id}")]
+        [HttpDelete]
+        public ActionResult DeleteUsuario(int id)
+        {
+
+            var result = usuarioRepository.DeleteUsuario(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok("Usuario Eliminado Correctamente");
+        }
+
+
+        [Route("api/usuario/EditaUsuario/{id}")]
+        [HttpPut]
+        public ActionResult EditaUsuario([FromBody] Usuario usuario, int id)
+        {
+
+            var result = usuarioRepository.EditaUsuario(usuario, id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(usuario);
         }
     }
 }

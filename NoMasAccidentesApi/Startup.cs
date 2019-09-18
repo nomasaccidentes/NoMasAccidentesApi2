@@ -26,6 +26,8 @@ namespace NoMasAccidentesApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IRolRepository, RolRepository>();
+            services.AddTransient<IProfesionalRepository, ProfesionalRepository>();
+            services.AddTransient<IClienteRepository, ClienteRepository>();
             services.AddTransient<IRubroRepository, RubroRepository>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddSingleton<IConfiguration>(Configuration);
