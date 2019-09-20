@@ -116,7 +116,7 @@ namespace NoMasAccidentesApi.Controllers
 
         [Route("api/usuario/InsertUsuario")]
         [HttpPost]
-        public ActionResult InserUsuario([FromBody] Usuario usuario)
+        public ActionResult InserUsuario([FromBody] UsuarioInsert usuario)
         {
 
             var result = usuarioRepository.InsertUsuario(usuario);

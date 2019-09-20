@@ -154,7 +154,7 @@ namespace NoMasAccidentesApi.Repositories
             return result;
         }
 
-        public object InsertUsuario(Usuario usuario)
+        public object InsertUsuario(UsuarioInsert usuario)
         {
             object result = null;
             try
@@ -164,9 +164,9 @@ namespace NoMasAccidentesApi.Repositories
                 dyParam.Add("u_username", OracleDbType.Varchar2, ParameterDirection.Input, usuario.usuario_username);
                 dyParam.Add("u_clave", OracleDbType.Varchar2, ParameterDirection.Input, usuario.usuario_clave);
                 dyParam.Add("u_activo", OracleDbType.Int32, ParameterDirection.Input, usuario.usuario_activo);
-                dyParam.Add("c_id", OracleDbType.Int32, ParameterDirection.Input, usuario.cliente_id);
-                dyParam.Add("p_id", OracleDbType.Int32, ParameterDirection.Input, usuario.profesional_id);
-                dyParam.Add("r_id", OracleDbType.Int32, ParameterDirection.Input, usuario.rol_id);
+                dyParam.Add("c_id", OracleDbType.Single, ParameterDirection.Input, usuario.cliente_id);
+                dyParam.Add("p_id", OracleDbType.Single, ParameterDirection.Input, usuario.profesional_id);
+                dyParam.Add("r_id", OracleDbType.Single, ParameterDirection.Input, usuario.rol_id);
 
                 var conn = this.GetConnection();
                 if (conn.State == ConnectionState.Closed)

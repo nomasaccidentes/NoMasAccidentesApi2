@@ -14,7 +14,7 @@ namespace NoMasAccidentesApi.Repositories
 
         object DeleteUsuario(int id);
 
-        object InsertUsuario(Usuario usuario);
+        object InsertUsuario(UsuarioInsert usuario);
 
         object EditaUsuario(Usuario usuario, int id);
     }
