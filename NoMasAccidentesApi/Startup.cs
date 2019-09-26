@@ -25,7 +25,16 @@ namespace NoMasAccidentesApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddTransient<IRolRepository, RolRepository>();
+            services.AddTransient<IServicioRepository, ServicioRepository>();
+            services.AddTransient<IActividadRepository, ActividadRepository>();
             services.AddTransient<IProfesionalRepository, ProfesionalRepository>();
             services.AddTransient<IClienteRepository, ClienteRepository>();
             services.AddTransient<IRubroRepository, RubroRepository>();
@@ -47,6 +56,10 @@ namespace NoMasAccidentesApi
                 app.UseHsts();
             }
 
+            app.UseCors("MyPolicy");
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
             app.UseMvc();
         }
     }
