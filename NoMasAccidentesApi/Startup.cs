@@ -33,6 +33,7 @@ namespace NoMasAccidentesApi
             }));
 
             services.AddTransient<IRolRepository, RolRepository>();
+            services.AddTransient<IContratoRepository, ContratoRepository>();
             services.AddTransient<IServicioRepository, ServicioRepository>();
             services.AddTransient<IActividadRepository, ActividadRepository>();
             services.AddTransient<IProfesionalRepository, ProfesionalRepository>();

@@ -28,8 +28,8 @@ namespace NoMasAccidentesApi.Repositories
             {
 
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("U_USERNAME", OracleDbType.Char, ParameterDirection.Input, login.username);
-                dyParam.Add("U_CLAVE", OracleDbType.Char, ParameterDirection.Input, login.clave);
+                dyParam.Add("U_USERNAME", OracleDbType.Varchar2, ParameterDirection.Input, login.username);
+                dyParam.Add("U_CLAVE", OracleDbType.Varchar2, ParameterDirection.Input, login.clave);
                 dyParam.Add("EMP_DETAIL_CURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
 
