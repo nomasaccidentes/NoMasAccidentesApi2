@@ -13,5 +13,7 @@ namespace NoMasAccidentesApi.Repositories
         object GetContratoByCliente(int id);
 
         object InserContrato(Contrato contrato);
+
+        object GetLastContratoId();
     }
 }

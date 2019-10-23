@@ -84,9 +84,41 @@ namespace NoMasAccidentesApi.Repositories
             return result;
         }
 
+        public object GetLastContratoId()
+        {
+            dynamic result = null;
+
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                var conn = this.GetConnection();
+
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_GET_LAST_CONTRATO";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return result;
+        }
+
         public object InserContrato(Contrato contrato)
         {
-            object result = null;
+            dynamic result = null;
             try
             {
                 var dyParam = new OracleDynamicParameters();
@@ -98,6 +130,7 @@ namespace NoMasAccidentesApi.Repositories
                 dyParam.Add("c_cant_ase", OracleDbType.Int32, ParameterDirection.Input, contrato.cant_asesoria);
                 dyParam.Add("c_activo", OracleDbType.Int32, ParameterDirection.Input, contrato.contrato_activo);
                 dyParam.Add("c_cliente_id", OracleDbType.Int32, ParameterDirection.Input, contrato.cliente_id);
+
 
 
                 var conn = this.GetConnection();

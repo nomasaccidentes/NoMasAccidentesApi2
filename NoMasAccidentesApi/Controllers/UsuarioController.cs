@@ -26,8 +26,7 @@ namespace NoMasAccidentesApi.Controllers
 
 
             dynamic result = usuarioRepository.GetUserLogin(login);
-            //Se crea una instancia de la clase rol
-
+            //Se crea una instancia de la clase ro
             if(result != null)
             {
                 Usuario u = new Usuario
@@ -87,9 +86,14 @@ namespace NoMasAccidentesApi.Controllers
 
                 u.rol = r;
 
-                return Ok(new { StatusCode = 200 , data = u});
+                return Ok(new { StatusCode = 200, data = u });
+                
+
+                
             }
             
+
+        
 
             if (result == null)
             {

@@ -11,4 +11,3 @@ C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netc
 C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\bin\Debug\netcoreapp2.1\NoMasAccidentesApi.pdb
 C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.dll
 C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.pdb
-C:\Users\AlexF\source\repos\NoMasAccidentesApi\NoMasAccidentesApi\obj\Debug\netcoreapp2.1\NoMasAccidentesApi.csprojAssemblyReference.cache

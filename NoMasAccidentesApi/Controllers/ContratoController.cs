@@ -44,6 +44,7 @@ namespace NoMasAccidentesApi.Controllers
 
 
             var result = contratoRepository.InserContrato(contrato);
+
             if (result == null)
             {
                 return NotFound();
@@ -66,8 +67,23 @@ namespace NoMasAccidentesApi.Controllers
             return Ok(result);
         }
 
+        [Route("api/contrato/getLastContrato")]
+        [HttpGet]
+        public ActionResult GetLastContratoId()
+        {
 
 
-        
+            var result = contratoRepository.GetLastContratoId();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+
+
+
+
     }
 }
