@@ -55,6 +55,8 @@ namespace NoMasAccidentesApi.Controllers
                     u.profesional = p;
                 }
 
+
+
                 if(result.CLIENTE_RUT != null)
                 {
                     Rubro rubro = new Rubro
@@ -74,8 +76,15 @@ namespace NoMasAccidentesApi.Controllers
                     };
                     u.cliente = c;
                 }
-                
 
+
+                Contrato contrato = new Contrato
+                {
+                    contrato_activo = Convert.ToInt32(result.CONTRATO_ACTIVO),
+                    contrato_id = Convert.ToInt32(result.CONTRATO_ID)
+                };
+
+                u.contrato = contrato;
 
                 Rol r = new Rol
                 {

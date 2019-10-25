@@ -22,5 +22,7 @@ namespace NoMasAccidentesApi.Models
         public Rol rol;
         public int usuario_activo { get; set; }
 
+        public Contrato contrato;
+
     }
 }
