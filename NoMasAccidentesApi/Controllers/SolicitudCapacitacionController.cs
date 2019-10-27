@@ -54,5 +54,19 @@ namespace NoMasAccidentesApi.Controllers
             }
             return Ok(result);
         }
+
+
+        [Route("api/solicitudCapacitacion/editaSolicitudCapacitacion/{id}")]
+        [HttpPut]
+        public IActionResult GetSolByContrato([FromBody] SolicitudCapacitacion solicitud, int id)
+
+        {
+            dynamic result = solicitudCapacitacion.editSolicitudCapacitacion(solicitud, id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok("editado correctamente");
+        }
     }
 }

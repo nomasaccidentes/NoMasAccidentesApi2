@@ -10,86 +10,15 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace NoMasAccidentesApi.Repositories
 {
-    public class SolicitudCapacitacionRepository : ISolicitudCapacitacionRepository
+    public class CapacitacionRepository : ICapacitacionRepository
     {
-
-
         IConfiguration configuration;
 
-        public SolicitudCapacitacionRepository(IConfiguration _configuration)
+        public CapacitacionRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
         }
-
-        public object editSolicitudCapacitacion(SolicitudCapacitacion solicitud, int id)
-        {
-            
-
-            object result = null;
-            try
-            {
-                var dyParam = new OracleDynamicParameters();
-
-                dyParam.Add("c_capacitacion_id", OracleDbType.Int32, ParameterDirection.Input, id);
-                dyParam.Add("c_solicitud_resolucion", OracleDbType.Varchar2, ParameterDirection.Input, solicitud.solicitudResolucion);
-                dyParam.Add("c_estado_solicitud", OracleDbType.Int32, ParameterDirection.Input, solicitud.estadoSolicitudId);
-                dyParam.Add("c_resolucion_fecha", OracleDbType.Date, ParameterDirection.Input, solicitud.solicitudResolucionFecha);
-
-
-                var conn = this.GetConnection();
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-
-                if (conn.State == ConnectionState.Open)
-                {
-                    var query = "SP_EDITA_SOLICITUD_CAP";
-
-                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return result;
-        }
-
-        public object getSolicitudCapacitacion()
-        {
-            object result = null;
-
-            try
-            {
-                var dyParam = new OracleDynamicParameters();
-                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
-
-                var conn = this.GetConnection();
-
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-
-                if (conn.State == ConnectionState.Open)
-                {
-                    var query = "SP_GET_SOLICITUD_CAP";
-
-                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-            return result;
-        }
-
-        public object getSolicitudCapacitacionByContrato(int id)
+        public object getCapacitacionByContrato(int id)
         {
             object result = null;
 
@@ -108,7 +37,7 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "SP_GET_SOLICITUD_CAP_CONTRATO";
+                    var query = "SP_GET_CAPACITACIONES_ById";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
@@ -122,18 +51,52 @@ namespace NoMasAccidentesApi.Repositories
             return result;
         }
 
-        public object insertSolicitudCapacitacion(SolicitudCapacitacion solicitud)
+        public object getCapacitaciones()
         {
             object result = null;
 
             try
             {
                 var dyParam = new OracleDynamicParameters();
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
-                dyParam.Add("c_descripcion", OracleDbType.Varchar2, ParameterDirection.Input, solicitud.solicitudCapacitacionDescripcion);
-                dyParam.Add("c_contrato_id", OracleDbType.Int32, ParameterDirection.Input, solicitud.cotrato_id);
-                dyParam.Add("c_fecha_asesoria", OracleDbType.Date, ParameterDirection.Input, solicitud.solicitudFechaCapacitacion);
+                var conn = this.GetConnection();
 
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_GET_CAPACITACIONES";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return result;
+        }
+
+        public object insertCapacitacion(Capacitacion capacitacion)
+        {
+             object result = null;
+
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+
+                dyParam.Add("c_detalle", OracleDbType.Varchar2, ParameterDirection.Input, capacitacion.capacitacionDetalle);
+                dyParam.Add("c_fecha", OracleDbType.Date, ParameterDirection.Input, capacitacion.capacitacionFecha);
+                dyParam.Add("c_contrato_id", OracleDbType.Int32, ParameterDirection.Input, capacitacion.contrato_id);
+                dyParam.Add("c_profesional_id", OracleDbType.Int32, ParameterDirection.Input, capacitacion.profesionalId);
+                
+                    
 
                 var conn = this.GetConnection();
                 if (conn.State == ConnectionState.Closed)
@@ -143,7 +106,7 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "SP_INSERT_SOLICITUD_CAP";
+                    var query = "SP_INSERT_CAPACITACION";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
@@ -153,7 +116,7 @@ namespace NoMasAccidentesApi.Repositories
                 throw ex;
             }
 
-            return result;
+            return capacitacion;
         }
 
 

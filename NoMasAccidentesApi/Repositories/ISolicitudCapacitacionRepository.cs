@@ -14,6 +14,6 @@ namespace NoMasAccidentesApi.Repositories
 
         object getSolicitudCapacitacionByContrato(int id);
 
-
+        object editSolicitudCapacitacion(SolicitudCapacitacion solicitud, int id);
     }
 }
