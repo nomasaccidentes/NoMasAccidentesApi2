@@ -10,63 +10,58 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace NoMasAccidentesApi.Repositories
 {
-    public class DetalleCapacitacionRepository : IDetalleCapacitacionRepository
+    public class AsesoriaRepository : IAsesoriaRepository
     {
+
         IConfiguration configuration;
 
-        public DetalleCapacitacionRepository(IConfiguration _configuration)
+        public AsesoriaRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
         }
-        public object getDetalleCapacitacion()
-        {
-            throw new NotImplementedException();
-        }
-
-        public object getDetalleCapacitacionByCapacitacion(int id)
+        public object cerrarAsesoria(Asesoria asesoria, int asesoria_id)
         {
             dynamic result = null;
-
             try
             {
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("c_id", OracleDbType.Int32, ParameterDirection.Input, id);
+
+                dyParam.Add("a_id", OracleDbType.Int32, ParameterDirection.Input, asesoria_id);
+                dyParam.Add("a_resolucion", OracleDbType.Int32, ParameterDirection.Input, asesoria.asesoria_resolicion);
+
+
+
+                var conn = this.GetConnection();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_EDITA_ASESORIA_CIERRE";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
+        public object getAsesoriaByContrato(int contrato_id)
+        {
+            dynamic result = null;
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+
+                dyParam.Add("a_contrato_id", OracleDbType.Int32, ParameterDirection.Input, contrato_id);
                 dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
-                var conn = this.GetConnection();
-
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-
-                if (conn.State == ConnectionState.Open)
-                {
-                    var query = "SP_GET_DET_CAP_BY_ID";
-
-                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).ToArray();
-                }
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-            return result;
-        }
-
-        public object insertDetalleCapacitacion(DetalleCapacitacion detalle)
-        {
-            dynamic result = null;
-            try
-            {
-                var dyParam = new OracleDynamicParameters();
-
-                dyParam.Add("cd_participante", OracleDbType.Varchar2, ParameterDirection.Input, detalle.capacitacionParticipante);
-                dyParam.Add("cd_correo", OracleDbType.Varchar2, ParameterDirection.Input, detalle.capacitacionCorreo);
-                dyParam.Add("c_capacitacion_id", OracleDbType.Varchar2, ParameterDirection.Input, detalle.capacitacionId);
-
 
 
                 var conn = this.GetConnection();
@@ -77,7 +72,7 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "SP_INSERT_DET_CAP";
+                    var query = "SP_GET_ASESORIA_CONTRATO";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
@@ -90,15 +85,14 @@ namespace NoMasAccidentesApi.Repositories
             return result;
         }
 
-        public object pasarListaDetalleCapacitacion(DetalleCapacitacion detalle,int presente)
+        public object getAsesorias()
         {
             dynamic result = null;
             try
             {
                 var dyParam = new OracleDynamicParameters();
 
-                dyParam.Add("cd_id", OracleDbType.Int32, ParameterDirection.Input, presente);
-                dyParam.Add("cd_asiste", OracleDbType.Int32, ParameterDirection.Input, detalle.capacitacionAsiste);
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
 
 
@@ -110,7 +104,7 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "SP_PASA_LISTA_CD";
+                    var query = "SP_GET_ASESORIAS";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
@@ -123,6 +117,40 @@ namespace NoMasAccidentesApi.Repositories
             return result;
         }
 
+        public object insertAsesoria(Asesoria asesoria)
+        {
+            dynamic result = null;
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+
+                dyParam.Add("a_detalle", OracleDbType.Varchar2, ParameterDirection.Input, asesoria.asesoria_detalle);
+                dyParam.Add("a_fecha", OracleDbType.Date, ParameterDirection.Input, asesoria.asesoria_fecha);
+                dyParam.Add("a_contrato", OracleDbType.Int32, ParameterDirection.Input, asesoria.contrato_id);
+                dyParam.Add("a_profesional", OracleDbType.Int32, ParameterDirection.Input, asesoria.profesional_id);
+
+
+
+                var conn = this.GetConnection();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_INSERT_ASESORIA";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
 
         private IDbConnection GetConnection()
         {

@@ -37,6 +37,10 @@ namespace NoMasAccidentesApi
             services.AddTransient<ISolicitudAsesoria, SolicitudAsesoriaRepository>();
             services.AddTransient<ISolicitudCapacitacionRepository, SolicitudCapacitacionRepository>();
             services.AddTransient<IDetalleCapacitacionRepository, DetalleCapacitacionRepository>();
+            services.AddTransient<IAsesoriaRepository, AsesoriaRepository>();
+            services.AddTransient<IAsesoriaDetalleRepository, AsesoriaDetalleRepository>();
+            services.AddTransient<IReporteAccidenteDetalleRepository, ReporteAccidenteDetalleRepository>();
+            services.AddTransient<IRegistroAccidenteRepository, RegistroAccidenteRepository>();
             services.AddTransient<INoMasAccidentesRepository, NoMasAccidentesRepository>();
             services.AddTransient<ICapacitacionRepository, CapacitacionRepository>();
             services.AddTransient<IContratoRepository, ContratoRepository>();

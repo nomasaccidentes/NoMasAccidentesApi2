@@ -10,27 +10,22 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace NoMasAccidentesApi.Repositories
 {
-    public class DetalleCapacitacionRepository : IDetalleCapacitacionRepository
+    public class RegistroAccidenteRepository : IRegistroAccidenteRepository
     {
+
         IConfiguration configuration;
 
-        public DetalleCapacitacionRepository(IConfiguration _configuration)
+        public RegistroAccidenteRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
         }
-        public object getDetalleCapacitacion()
-        {
-            throw new NotImplementedException();
-        }
-
-        public object getDetalleCapacitacionByCapacitacion(int id)
+        public object getAccidentes()
         {
             dynamic result = null;
 
             try
             {
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("c_id", OracleDbType.Int32, ParameterDirection.Input, id);
                 dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
                 var conn = this.GetConnection();
@@ -42,7 +37,7 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "SP_GET_DET_CAP_BY_ID";
+                    var query = "SP_GET_REGISTRO_ACCIDENTE";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).ToArray();
                 }
@@ -56,17 +51,53 @@ namespace NoMasAccidentesApi.Repositories
             return result;
         }
 
-        public object insertDetalleCapacitacion(DetalleCapacitacion detalle)
+        public object getAccidentesByContratoId(int contratoId)
         {
-            dynamic result = null;
+            object result = null;
+
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("c_contrato", OracleDbType.Int32, ParameterDirection.Input, contratoId);
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                var conn = this.GetConnection();
+
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_GET_REGISTRO_ACC_BY_CON";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return result;
+        }
+
+        public object insertRegistroAccidente(RegistroAccidente registro)
+        {
+            object result = null;
+
             try
             {
                 var dyParam = new OracleDynamicParameters();
 
-                dyParam.Add("cd_participante", OracleDbType.Varchar2, ParameterDirection.Input, detalle.capacitacionParticipante);
-                dyParam.Add("cd_correo", OracleDbType.Varchar2, ParameterDirection.Input, detalle.capacitacionCorreo);
-                dyParam.Add("c_capacitacion_id", OracleDbType.Varchar2, ParameterDirection.Input, detalle.capacitacionId);
-
+                dyParam.Add("r_nombre", OracleDbType.Varchar2, ParameterDirection.Input, registro.regigstroAccidenteNombre);
+                dyParam.Add("r_fecha", OracleDbType.Date, ParameterDirection.Input, registro.registroAccidenteFecha);
+                dyParam.Add("p_id", OracleDbType.Int32, ParameterDirection.Input, registro.profesionalId);
+                dyParam.Add("c_id", OracleDbType.Int32, ParameterDirection.Input, registro.contratoId);
+                dyParam.Add("a_id", OracleDbType.Int32, ParameterDirection.Input, registro.asesoriaId);
+                
 
 
                 var conn = this.GetConnection();
@@ -77,7 +108,7 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "SP_INSERT_DET_CAP";
+                    var query = "SP_INSERT_REGISTRO_ACCIDENTE";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
@@ -87,42 +118,8 @@ namespace NoMasAccidentesApi.Repositories
                 throw ex;
             }
 
-            return result;
+            return registro;
         }
-
-        public object pasarListaDetalleCapacitacion(DetalleCapacitacion detalle,int presente)
-        {
-            dynamic result = null;
-            try
-            {
-                var dyParam = new OracleDynamicParameters();
-
-                dyParam.Add("cd_id", OracleDbType.Int32, ParameterDirection.Input, presente);
-                dyParam.Add("cd_asiste", OracleDbType.Int32, ParameterDirection.Input, detalle.capacitacionAsiste);
-
-
-
-                var conn = this.GetConnection();
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-
-                if (conn.State == ConnectionState.Open)
-                {
-                    var query = "SP_PASA_LISTA_CD";
-
-                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return result;
-        }
-
 
         private IDbConnection GetConnection()
         {
