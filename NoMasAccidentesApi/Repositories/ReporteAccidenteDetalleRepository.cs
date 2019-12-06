@@ -92,7 +92,7 @@ namespace NoMasAccidentesApi.Repositories
                 var dyParam = new OracleDynamicParameters();
 
                 dyParam.Add("rd_nombre", OracleDbType.Varchar2, ParameterDirection.Input, reg_detalle.registroAccidenteDetalleNombre);
-                dyParam.Add("rd_usuario", OracleDbType.Int32, ParameterDirection.Input, reg_detalle.registroAccidenteDetalleUsuario);
+                dyParam.Add("rd_usuario", OracleDbType.Varchar2, ParameterDirection.Input, reg_detalle.registroAccidenteDetalleUsuario);
                 dyParam.Add("rd_fecha", OracleDbType.Date, ParameterDirection.Input, reg_detalle.registroAccidenteDetalleFecha);
                 dyParam.Add("rd_reg_id", OracleDbType.Int32, ParameterDirection.Input, reg_detalle.registroAccidenteId);
 
