@@ -19,6 +19,40 @@ namespace NoMasAccidentesApi.Repositories
         {
             configuration = _configuration;
         }
+
+        public object desactivaContrato(int contratoId, Contrato contrato)
+        {
+            object result = null;
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+
+                dyParam.Add("c_id", OracleDbType.Int32, ParameterDirection.Input, contratoId);
+                dyParam.Add("c_cliente_id", OracleDbType.Int32, ParameterDirection.Input, contrato.cliente_id);
+                dyParam.Add("c_estado", OracleDbType.Int32, ParameterDirection.Input, contrato.contrato_activo);
+
+
+            var conn = this.GetConnection();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_DESACTIVA_CONTRATO";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
+
         public object GetContrato()
         {
             dynamic result = null;
@@ -130,6 +164,7 @@ namespace NoMasAccidentesApi.Repositories
                 dyParam.Add("c_cant_ase", OracleDbType.Int32, ParameterDirection.Input, contrato.cant_asesoria);
                 dyParam.Add("c_activo", OracleDbType.Int32, ParameterDirection.Input, contrato.contrato_activo);
                 dyParam.Add("c_cliente_id", OracleDbType.Int32, ParameterDirection.Input, contrato.cliente_id);
+                dyParam.Add("c_num_trabajadores", OracleDbType.Int32, ParameterDirection.Input, contrato.num_trabajadores);
 
 
 

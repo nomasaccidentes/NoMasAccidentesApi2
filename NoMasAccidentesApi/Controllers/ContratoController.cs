@@ -81,6 +81,22 @@ namespace NoMasAccidentesApi.Controllers
             return Ok(result);
         }
 
+        [Route("api/contrato/desactivaContrato/{contratoId}")]
+        [HttpPut]
+        public ActionResult EditaCliente(int contratoId, [FromBody] Contrato contrato)
+        {
+
+            var result = contratoRepository.desactivaContrato(contratoId, contrato);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
+        
+
 
 
 

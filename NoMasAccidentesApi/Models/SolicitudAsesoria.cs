@@ -18,6 +18,8 @@ namespace NoMasAccidentesApi.Models
 
         public DateTime solicitudResolucionFecha { get; set; }
 
+        public int solicitudAsesoriaTipo { get; set; }
+
 
     }
 }

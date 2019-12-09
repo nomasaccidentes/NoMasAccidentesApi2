@@ -29,10 +29,12 @@ namespace NoMasAccidentesApi.Controllers
             var result = ICapacitacionRepository.getCapacitaciones();
             if (result == null)
             {
-                return NotFound();
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
             }
 
-            return Ok(result);
+
+            return Ok(new { StatusCode = 200, data = result });
         }
 
         [Route("api/capacitacion/getCapacitacionById/{id}")]

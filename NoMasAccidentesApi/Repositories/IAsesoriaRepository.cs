@@ -15,5 +15,9 @@ namespace NoMasAccidentesApi.Repositories
         object insertAsesoria(Asesoria asesoria);
 
         object cerrarAsesoria(Asesoria asesoria, int asesoria_id);
+
+
+        object getAsesoriaById(int id);
+       
     }
 }

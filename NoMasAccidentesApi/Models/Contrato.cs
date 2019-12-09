@@ -22,5 +22,7 @@ namespace NoMasAccidentesApi.Models
 
         public int cliente_id { get; set; }
 
+        public int num_trabajadores { get; set; }
+
     }
 }

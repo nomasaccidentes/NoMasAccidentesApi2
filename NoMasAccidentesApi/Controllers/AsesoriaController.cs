@@ -78,5 +78,24 @@ namespace NoMasAccidentesApi.Controllers
 
             return Ok(result);
         }
+
+        [Route("api/asesoria/getAsesoriaById/{id}")]
+        [HttpGet]
+        public ActionResult getAsesoriasById(int id)
+        {
+
+            var result = iasesoriaRepository.getAsesoriaById(id);
+            if (result == null)
+            {
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
+            }
+
+
+            return Ok(new { StatusCode = 200, data = result });
+        }
+
+
+        
     }
 }

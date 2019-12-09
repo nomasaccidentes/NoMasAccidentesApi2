@@ -10,9 +10,13 @@ namespace NoMasAccidentesApi.Models
         public int asesoria_id { get; set; }
         public string asesoria_detalle { get; set; }
         public DateTime asesoria_fecha { get; set; }
-        public string asesoria_resolicion { get; set; }
+        public string asesoria_comentario_resolucion { get; set; }
 
         public int contrato_id { get; set; }
         public int profesional_id { get; set; }
+
+        public int tipo_asesoria_id { get; set; }
+
+        public int asesoria_finalizada { get; set; }
     }
 }
