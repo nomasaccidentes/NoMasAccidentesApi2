@@ -11,5 +11,9 @@ namespace NoMasAccidentesApi.Models
         public string pagoContratoDescripcion { get;set; }
         public DateTime pagoContratoVcto { get; set; }
         public int clienteId { get; set; }
+
+        public DateTime pagoContratoReal { get; set; }
+
+        public int pagoContratoEstadoId { get; set; }
     }
 }

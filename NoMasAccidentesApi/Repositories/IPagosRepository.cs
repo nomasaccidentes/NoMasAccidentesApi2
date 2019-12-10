@@ -10,5 +10,9 @@ namespace NoMasAccidentesApi.Repositories
     {
 
         object InsertPagosByContrato(PagoContrato pagosContrato);
+
+        object getPagosByContratoId(int contratoId);
+
+        object ingresaPagoContrato(PagoContrato pago, int id);
     }
 }

@@ -140,28 +140,19 @@ namespace NoMasAccidentesApi.Repositories
         public void enviarMail()
         {
 
-            var fromAddress = new MailAddress("alex.fredes.l@gmail.com", "Alexito");
-            var toAddress = new MailAddress("a.fredesl@alumnos.duoc.cl", "To Name");
-            const string fromPassword = "cangreburguer";
-            const string subject = "test";
-            const string body = "Hey now!!";
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From =  new MailAddress("alex.fredes.l@gmail.com");
+            mailMessage.To.Add("alexnicolasfredeslopez@gmail.com");
+            mailMessage.Subject = "Prueba correo";
+            mailMessage.Body = "asdlknasldknaslkdnsad";
 
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
-                Timeout = 20000
-            };
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body
-            })
-            {
-                smtp.Send(message);
-            }
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            smtp.Port = 25;
+            smtp.Credentials = new NetworkCredential("alex.fredes.l@gmail.com", "cangreburguer");
+            smtp.EnableSsl = false;
+            smtp.Send(mailMessage);
+
+
         }
     }
 }

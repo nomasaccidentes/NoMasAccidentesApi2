@@ -22,7 +22,74 @@ namespace NoMasAccidentesApi.Repositories
             configuration = _configuration;
         }
 
+        public object getPagosByContratoId(int contratoId)
+        {
+            
+                 object result = null;
 
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("pc_id", OracleDbType.Int32, ParameterDirection.Input, contratoId);
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                var conn = this.GetConnection();
+
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_GET_PAGO_CONTRATO_BY_ID";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return result;
+        }
+
+        public object ingresaPagoContrato(PagoContrato pago, int id)
+        {
+            
+
+            object result = null;
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+
+                dyParam.Add("pc_id", OracleDbType.Int32, ParameterDirection.Input, id);
+                dyParam.Add("pc_fecha", OracleDbType.Date, ParameterDirection.Input, pago.pagoContratoReal);
+                dyParam.Add("pc_estado", OracleDbType.Int32, ParameterDirection.Input, pago.pagoContratoEstadoId);
+
+
+                var conn = this.GetConnection();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_INGRESA_PAGO_CONTRATO";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+        }
 
         public object InsertPagosByContrato(PagoContrato pagoContrato)
         {
