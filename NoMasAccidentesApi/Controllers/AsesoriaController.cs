@@ -44,10 +44,12 @@ namespace NoMasAccidentesApi.Controllers
             var result = iasesoriaRepository.getAsesoriaByContrato(id);
             if (result == null)
             {
-                return NotFound();
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
             }
 
-            return Ok(result);
+
+            return Ok(new { StatusCode = 200, data = result });
         }
 
         [Route("api/asesorias/insertAsesoria")]

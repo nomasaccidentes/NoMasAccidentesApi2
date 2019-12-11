@@ -14,6 +14,8 @@ namespace NoMasAccidentesApi.Repositories
         object insertCapacitacion(Capacitacion capacitacion);
 
 
+        object getCapacitacionByCapacitacionId(int capId);
+
         object getCapacitacionByContrato(int id);
     }
 }

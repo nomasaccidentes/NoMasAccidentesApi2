@@ -95,7 +95,42 @@ namespace NoMasAccidentesApi.Controllers
             return Ok();
         }
 
-        
+
+        [Route("api/contrato/GetRestanteAsesoria/{id}")]
+        [HttpGet]
+        public ActionResult getRestanteAsesoria(int id)
+        {
+
+
+            var result = contratoRepository.obtieneRestanteAsesoria(id);
+            if (result == null)
+            {
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
+            }
+
+
+            return Ok(new { StatusCode = 200, data = result });
+        }
+
+        [Route("api/contrato/GetRestanteCapacitacion/{id}")]
+        [HttpGet]
+        public ActionResult getRestanteCapacitacion(int id)
+        {
+
+
+            var result = contratoRepository.obtieneRestanteCapacitacion(id);
+            if (result == null)
+            {
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
+            }
+
+
+            return Ok(new { StatusCode = 200, data = result });
+        }
+
+
 
 
 

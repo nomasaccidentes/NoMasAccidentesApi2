@@ -27,9 +27,12 @@ namespace NoMasAccidentesApi.Controllers
             dynamic result = solicitudAsesoriaEspecialRepository.getAsesoriasEspeciales();
             if (result == null)
             {
-                return NotFound();
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
             }
-            return Ok(result);
+
+
+            return Ok(new { StatusCode = 200, data = result });
         }
 
 
@@ -52,9 +55,12 @@ namespace NoMasAccidentesApi.Controllers
             dynamic result = solicitudAsesoriaEspecialRepository.getAsesoriaEspecialByContratoId(id);
             if (result == null)
             {
-                return NotFound();
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
             }
-            return Ok(result);
+
+
+            return Ok(new { StatusCode = 200, data = result });
         }
 
         [Route("api/solicitudAsesoriaEspecial/editaSolicitudAsesoria/{id}")]

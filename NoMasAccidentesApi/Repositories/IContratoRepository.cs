@@ -17,5 +17,9 @@ namespace NoMasAccidentesApi.Repositories
         object GetLastContratoId();
 
         object desactivaContrato(int contratoId, Contrato contrato);
+
+        object obtieneRestanteCapacitacion(int contratoId);
+
+        object obtieneRestanteAsesoria(int contratoId);
     }
 }

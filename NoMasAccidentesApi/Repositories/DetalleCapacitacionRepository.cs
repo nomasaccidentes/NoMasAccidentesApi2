@@ -82,7 +82,7 @@ namespace NoMasAccidentesApi.Repositories
                     var query = "SP_INSERT_DET_CAP";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
-                    enviarMail();
+                    enviarMail(detalle.capacitacionParticipante, detalle.capacitacionCorreo, detalle.capacitacionId);
                 }
             }
             catch (Exception ex)
@@ -114,7 +114,6 @@ namespace NoMasAccidentesApi.Repositories
                 if (conn.State == ConnectionState.Open)
                 {
                     var query = "SP_PASA_LISTA_CD";
-                    enviarMail();
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
             }
@@ -137,20 +136,37 @@ namespace NoMasAccidentesApi.Repositories
 
 
 
-        public void enviarMail()
+        public void enviarMail(string participante, string correoInvitado , int capacitacionid)
         {
 
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From =  new MailAddress("alex.fredes.l@gmail.com");
-            mailMessage.To.Add("alexnicolasfredeslopez@gmail.com");
-            mailMessage.Subject = "Prueba correo";
-            mailMessage.Body = "asdlknasldknaslkdnsad";
 
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-            smtp.Port = 25;
-            smtp.Credentials = new NetworkCredential("alex.fredes.l@gmail.com", "cangreburguer");
-            smtp.EnableSsl = false;
-            smtp.Send(mailMessage);
+            CapacitacionRepository capacitacionRepository = new CapacitacionRepository(configuration);
+
+            dynamic  capacitacion = capacitacionRepository.getCapacitacionByCapacitacionId(capacitacionid);
+
+            string emailOrigen = "nomasaccidentess@gmail.com";
+            //string emailDestino = "alexnicolasfredeslopez@gmail.com";
+            string constrasena = "fwhbskbqvucomxzb";
+            String mensaje = "Hola <strong>" + participante + "</strong><br><br>" +
+                " Estas invitado a una capacitación <br>" +
+                " Dia: <strong>" + capacitacion.CAPACITACION_FECHA + "</strong> <br>" +
+                " Profesional : <strong>" + capacitacion.PROFESIONAL+"</strong>." +
+                " <br><br>" +
+                "Saluda Atte. Equipo No Más Accidentes";
+            MailMessage oMailMessage = new MailMessage(emailOrigen, correoInvitado, "Invitación a Capacitación ", mensaje);
+
+            oMailMessage.IsBodyHtml = true;
+
+            SmtpClient oSmtp = new SmtpClient("smtp.gmail.com");
+            oSmtp.EnableSsl = true;
+            oSmtp.UseDefaultCredentials = true;
+            oSmtp.Host = "smtp.gmail.com";
+            oSmtp.Port = 587;
+            oSmtp.Credentials = new System.Net.NetworkCredential(emailOrigen, constrasena);
+
+            oSmtp.Send(oMailMessage);
+
+            oSmtp.Dispose();
 
 
         }
