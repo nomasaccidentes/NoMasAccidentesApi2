@@ -81,6 +81,22 @@ namespace NoMasAccidentesApi.Controllers
 
             return Ok(new { StatusCode = 200, data = result });
         }
-    
+
+        [Route("api/registroAccidente/getCalculoAccidentabilidad/{id}")]
+        [HttpGet]
+        public ActionResult getAccidentabilidad(int id)
+        {
+
+            var result = registroAccidenteRepository.getAccidentabilidad(id);
+            if (result == null)
+            {
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
+            }
+
+
+            return Ok(new { StatusCode = 200, data = result });
+        }
+
     }
 }

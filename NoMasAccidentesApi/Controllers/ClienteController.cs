@@ -46,6 +46,7 @@ namespace NoMasAccidentesApi.Controllers
                     cliente_rut = res.CLIENTE_RUT,
                     cliente_activo = Convert.ToInt32(res.CLIENTE_ACTIVO),
                     rubro_id = r.rubro_id,
+                    clienteCorreo = res.CLIENTE_CORREO,
                     rubro = r
 
                 };
@@ -106,6 +107,23 @@ namespace NoMasAccidentesApi.Controllers
             }
 
             return Ok(cliente);
+        }
+
+
+        [Route("api/cliente/getClientebyContratoId/{id}")]
+        [HttpGet]
+        public ActionResult getClientePorCOntrato(int id)
+        {
+
+            var result = clienteRepository.getCorreoClienteByContratoId(id);
+            if (result == null)
+            {
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
+            }
+
+
+            return Ok(new { StatusCode = 200, data = result });
         }
     }
 }
