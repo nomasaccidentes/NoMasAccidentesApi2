@@ -16,5 +16,7 @@ namespace NoMasAccidentesApi.Repositories
         object insertRegistroAccidente(RegistroAccidente registro);
 
         object registroByAsesoriaId(int asesoriaId);
+
+        object getAccidentabilidad(int contratoId);
     }
 }

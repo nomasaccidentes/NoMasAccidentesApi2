@@ -19,6 +19,41 @@ namespace NoMasAccidentesApi.Repositories
         {
             configuration = _configuration;
         }
+
+        public object getAccidentabilidad(int contratoId)
+        {
+            
+                 dynamic result = null;
+
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("c_contrato_id", OracleDbType.Int32, ParameterDirection.Input, contratoId);
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                var conn = this.GetConnection();
+
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "GET_ACCIDENTABILIDAD";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).SingleOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return result;
+        }
+
         public object getAccidentes()
         {
             dynamic result = null;

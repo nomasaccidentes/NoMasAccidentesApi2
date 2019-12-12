@@ -15,5 +15,7 @@ namespace NoMasAccidentesApi.Repositories
         object DeleteCliente(int id);
 
         object EditaCliente(Cliente cliente, int id);
+
+        object getCorreoClienteByContratoId(int contratoId);
     }
 }

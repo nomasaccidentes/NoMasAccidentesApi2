@@ -15,5 +15,7 @@ namespace NoMasAccidentesApi.Models
 
         public int rubro_id { get; set; }
         public Rubro rubro { get; set; }
+
+        public string clienteCorreo { get; set; }
     }
 }

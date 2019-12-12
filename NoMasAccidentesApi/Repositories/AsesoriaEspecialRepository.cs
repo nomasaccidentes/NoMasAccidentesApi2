@@ -10,27 +10,24 @@ using System.Threading.Tasks;
 
 namespace NoMasAccidentesApi.Repositories
 {
-    public class TipoAsesoriaEspecialRepository : ITipoAsesoriaEspecialRepository
+    public class AsesoriaEspecialRepository : IAsesoriaEspecialRepository
     {
 
         IConfiguration configuration;
 
-        public TipoAsesoriaEspecialRepository(IConfiguration _configuration)
+        public AsesoriaEspecialRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
         }
-
-
-        public object deleteTipoAsesoriaEspecial(int id)
+        public object cerrarAsesoria(AsesoriaEspecial asesoria, int asesoria_id)
         {
-            object result = null;
-
+            dynamic result = null;
             try
             {
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("ta_id", OracleDbType.Int32, ParameterDirection.Input, id);
 
-
+                dyParam.Add("a_id", OracleDbType.Int32, ParameterDirection.Input, asesoria_id);
+                dyParam.Add("a_resolucion", OracleDbType.Varchar2, ParameterDirection.Input, asesoria.asesoriaComentarioResolucion);
 
                 var conn = this.GetConnection();
                 if (conn.State == ConnectionState.Closed)
@@ -40,7 +37,7 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "DP_DELETE_TIP_AS_ESPECIAL";
+                    var query = "SP_EDITA_ASESORIA_ESP_CIERRE";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
@@ -53,51 +50,19 @@ namespace NoMasAccidentesApi.Repositories
             return result;
         }
 
-        public object editTipoAsesoriaEspecial(TipoAsesoriaEspecial asesoria, int id)
+        public object getAsesoriaByContrato(int contrato_id)
         {
-            object result = null;
-
+            dynamic result = null;
             try
             {
                 var dyParam = new OracleDynamicParameters();
-                dyParam.Add("ta_id", OracleDbType.Int32, ParameterDirection.Input, id);
-                dyParam.Add("ta_nombre", OracleDbType.Varchar2, ParameterDirection.Input, asesoria.asesoriaEspecialNomnbre);
 
-
-
-                var conn = this.GetConnection();
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-
-                if (conn.State == ConnectionState.Open)
-                {
-                    var query = "SP_EDITA_TIP_ASE_ESPECIAL";
-
-                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return asesoria;
-        }
-
-        public object getTipoAsesoriaEspecial()
-        {
-
-         object result = null;
-
-            try
-            {
-                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("ae_contrato_id", OracleDbType.Int32, ParameterDirection.Input, contrato_id);
                 dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
-                var conn = this.GetConnection();
 
+
+                var conn = this.GetConnection();
                 if (conn.State == ConnectionState.Closed)
                 {
                     conn.Open();
@@ -105,68 +70,30 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "SP_GET_TIP_AS_ESPECIAL";
+                    var query = "SP_GET_ASE_ESP_BY_CON";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
 
             return result;
         }
 
-        public object insertTipoAsesoriaEspecial(TipoAsesoriaEspecial asesoriaEspecial)
+        public object getAsesoriaById(int id)
         {
-            object result = null;
-
+            dynamic result = null;
             try
             {
                 var dyParam = new OracleDynamicParameters();
-
-                dyParam.Add("ta_nombre", OracleDbType.Varchar2, ParameterDirection.Input, asesoriaEspecial.asesoriaEspecialNomnbre);
-
-
-
-                var conn = this.GetConnection();
-                if (conn.State == ConnectionState.Closed)
-                {
-                    conn.Open();
-                }
-
-                if (conn.State == ConnectionState.Open)
-                {
-                    var query = "SP_INSERT_TIP_ASE_ESPECIAL";
-
-                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return asesoriaEspecial;
-        }
-
-        public object obtieneIdPorNombre(TipoAsesoriaEspecial asesoria)
-        {
-         
-            
-
-                 dynamic result = null;
-
-            try
-            {
-                var dyParam = new OracleDynamicParameters();
-
-                dyParam.Add("ta_nombre", OracleDbType.Varchar2, ParameterDirection.Input, asesoria.asesoriaEspecialNomnbre);
+                dyParam.Add("aed_id", OracleDbType.Int32, ParameterDirection.Input, id);
                 dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
 
 
+
                 var conn = this.GetConnection();
                 if (conn.State == ConnectionState.Closed)
                 {
@@ -175,7 +102,7 @@ namespace NoMasAccidentesApi.Repositories
 
                 if (conn.State == ConnectionState.Open)
                 {
-                    var query = "SP_OBTIENE_ID_TIPO_AS_ESP";
+                    var query = "SP_GET_ASE_ESP_BY_ID";
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
@@ -186,6 +113,77 @@ namespace NoMasAccidentesApi.Repositories
             }
 
             return result;
+        }
+
+        public object getAsesorias()
+        {
+            dynamic result = null;
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+
+
+
+                var conn = this.GetConnection();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_GET_ASE_ESPECIAL";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+
+            
+        }
+
+        public object insertAsesoria(AsesoriaEspecial asesoria)
+        {
+            dynamic result = null;
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+
+                dyParam.Add("ae_nombre", OracleDbType.Varchar2, ParameterDirection.Input, asesoria.asesoriaEspecialNombre);
+                dyParam.Add("ae_fecha", OracleDbType.Date, ParameterDirection.Input, asesoria.asesoriaEspecialFecha);
+                dyParam.Add("ae_contrato_id", OracleDbType.Int32, ParameterDirection.Input, asesoria.contratoId);
+                dyParam.Add("ae_profesional_id", OracleDbType.Int32, ParameterDirection.Input, asesoria.profesionalId);
+                dyParam.Add("a_tipo_asesoria", OracleDbType.Int32, ParameterDirection.Input, asesoria.tipoAsesoriaEspecialId);
+
+
+
+                var conn = this.GetConnection();
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_INSERT_ASESORIA_ESPECIAL";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
+
+            
         }
 
         private IDbConnection GetConnection()

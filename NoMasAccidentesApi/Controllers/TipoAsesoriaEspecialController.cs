@@ -79,5 +79,23 @@ namespace NoMasAccidentesApi.Controllers
 
             return Ok(result);
         }
+
+        [Route("api/tipoAsesoriaEspecial/getTipoAsesoriaByName")]
+        [HttpPost]
+        public ActionResult tipoAsesoriaByNombre([FromBody] TipoAsesoriaEspecial asesoria)
+        {
+
+            dynamic result = tipoAsesoriaEspecialRepository.obtieneIdPorNombre(asesoria);
+
+
+            if (result == null)
+            {
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
+            }
+
+
+            return Ok(new { StatusCode = 200, data = result });
+        }
     }
 }

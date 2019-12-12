@@ -12,5 +12,7 @@ namespace NoMasAccidentesApi.Repositories
         object insertTipoAsesoriaEspecial(TipoAsesoriaEspecial asesoriaEspecial);
         object editTipoAsesoriaEspecial(TipoAsesoriaEspecial asesoria, int id);
         object deleteTipoAsesoriaEspecial(int id);
+
+        object obtieneIdPorNombre(TipoAsesoriaEspecial asesoria);
     }
 }

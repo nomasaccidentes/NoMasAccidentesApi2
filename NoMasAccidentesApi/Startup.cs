@@ -55,6 +55,8 @@ namespace NoMasAccidentesApi
             services.AddTransient<IPagoContratoDetalleRepository, PagoContratoDetalleRepository>();
             services.AddTransient<ITipoAsesoriaEspecialRepository, TipoAsesoriaEspecialRepository>();
             services.AddTransient<ISolicitudAsesoriaEspecialRepository, SolicitudAsesoriaEspecialRepository>();
+            services.AddTransient<IAsesoriaEspecialRepository, AsesoriaEspecialRepository>();
+            services.AddTransient<IAsesoriaEspecialDetalleRepository, AsesoriaEspecialDetalleRepository>();
 
             services.AddSingleton<IConfiguration>(Configuration);
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
