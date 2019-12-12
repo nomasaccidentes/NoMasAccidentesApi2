@@ -21,5 +21,10 @@ namespace NoMasAccidentesApi.Repositories
         object obtieneRestanteCapacitacion(int contratoId);
 
         object obtieneRestanteAsesoria(int contratoId);
+
+        object getAsesoriasEspecialesByContrato(int contratoId);
+
+
+        object getContratoConAccidente();
     }
 }

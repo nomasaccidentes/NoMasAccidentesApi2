@@ -131,6 +131,45 @@ namespace NoMasAccidentesApi.Controllers
         }
 
 
+        [Route("api/contrato/getAsesoriasEspecialesByContrato/{id}")]
+        [HttpGet]
+        public ActionResult getAsesoriasEspecialesByContrato(int id)
+        {
+
+
+            var result = contratoRepository.getAsesoriasEspecialesByContrato(id);
+            if (result == null)
+            {
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
+            }
+
+
+            return Ok(new { StatusCode = 200, data = result });
+        }
+
+
+
+        
+
+
+        [Route("api/contrato/GetContratoAccidente")]
+        [HttpGet]
+        public ActionResult GetContratoAccidente()
+        {
+            dynamic result = contratoRepository.getContratoConAccidente();
+
+
+            if (result == null)
+            {
+
+                return NotFound(new { StatusCode = 204, data = "Sin registros" });
+            }
+
+
+            return Ok(new { StatusCode = 200, data = result });
+        }
+
 
 
 

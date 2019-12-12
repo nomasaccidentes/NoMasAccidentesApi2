@@ -53,6 +53,41 @@ namespace NoMasAccidentesApi.Repositories
             return result;
         }
 
+        public object getAsesoriasEspecialesByContrato(int contratoId)
+        {
+            
+
+            dynamic result = null;
+
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("c_contrato_id", OracleDbType.Int32, ParameterDirection.Input, contratoId);
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                var conn = this.GetConnection();
+
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_GET_AS_ESP_CONF";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return result;
+        }
+
         public object GetContrato()
         {
             dynamic result = null;
@@ -116,6 +151,40 @@ namespace NoMasAccidentesApi.Repositories
             }
 
             return result;
+        }
+
+        public object getContratoConAccidente()
+        {
+            dynamic result = null;
+
+            try
+            {
+                var dyParam = new OracleDynamicParameters();
+                dyParam.Add("EMPCURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+
+                var conn = this.GetConnection();
+
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+
+                if (conn.State == ConnectionState.Open)
+                {
+                    var query = "SP_GET_CON_ACCIDENTE";
+
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return result;
+
+            
         }
 
         public object GetLastContratoId()

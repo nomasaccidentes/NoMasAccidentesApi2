@@ -142,7 +142,7 @@ namespace NoMasAccidentesApi.Repositories
                 {
                     var query = "GET_CLIENTE_BY_CONTRATO";
 
-                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).ToArray();
+                    result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure).SingleOrDefault();
                 }
             }
             catch (Exception ex)

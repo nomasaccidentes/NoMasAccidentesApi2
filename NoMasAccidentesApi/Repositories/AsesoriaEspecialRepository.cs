@@ -137,12 +137,16 @@ namespace NoMasAccidentesApi.Repositories
 
                     result = SqlMapper.Query(conn, query, param: dyParam, commandType: CommandType.StoredProcedure);
                 }
+
+
+                conn.Close();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
+            
             return result;
 
             
